@@ -16,15 +16,15 @@ const config = {
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
-  url: "https://www.aishort.top",
+  url: "https://prompts.lianli.us.kg",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "rockbenben", // Usually your GitHub org/user name.
-  projectName: "ChatGPT-Shortcut", // Usually your repo name.
+  organizationName: "zy111x", // Usually your GitHub org/user name.
+  projectName: "ChatGPT_prompts", // Usually your repo name.
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
@@ -145,26 +145,12 @@ const config = {
                 label: "💬 加入 QQ 群",
                 href: "https://img.newzone.top/qq736094782.jpg?imageMogr2/format/webp",
               },
-              {
-                label: "📺 加入 Discord",
-                href: "https://discord.gg/PZTQfJ4GjX",
-              },
             ],
           },
           // remove the language dropdown from the navbar (if you only have one language)
           { type: "localeDropdown", position: "right" },
           {
-            href: "https://qm.qq.com/q/sHgB9eqd6E",
-            position: "right",
-            className: "header-qq-link",
-          },
-          {
-            href: "https://discord.gg/PZTQfJ4GjX",
-            position: "right",
-            className: "header-discord-link",
-          },
-          {
-            href: "https://github.com/rockbenben/ChatGPT-Shortcut",
+            href: "https://github.com/zy111x/ChatGPT_prompts",
             position: "right",
             className: "header-github-link",
           },
