@@ -89,7 +89,7 @@ const config = {
       ],
       navbar: {
         hideOnScroll: true,
-        title: "AI Short",
+        title: "AI Prompts",
         logo: {
           alt: "ChatGPT Shortcuts",
           src: "img/logo.svg",
