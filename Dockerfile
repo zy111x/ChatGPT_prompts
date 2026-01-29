@@ -13,8 +13,11 @@ RUN yarn install --frozen-lockfile --network-timeout 100000
 # 复制项目源代码到工作目录
 COPY . .
 
+# 修改 locales 配置
+RUN sed -i 's/locales: \["en", "zh-Hans", "ja", "ko", "es", "pt", "fr", "de", "it", "ru", "hi", "ar", "bn"\]/locales: ["en", "zh-Hans", "zh-Hant", "ja", "ko", "es", "pt", "hi", "ind", "vi", "th", "fr", "de", "it", "ru", "ar", "tr", "bn"]/' docusaurus.config.js
+
 # 构建静态站点
-RUN yarn build
+RUN yarn build-phased
 
 # 第二阶段: 使用 Nginx 作为静态服务器
 FROM nginx:stable-alpine
