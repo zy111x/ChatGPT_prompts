@@ -70,7 +70,7 @@ const FavoriteCardComponent = ({ data: user, sortableId, isFiltered, onRemoveFav
         copyText(prompt);
       }
     },
-    [isDataCard, updateCopy, copyText, prompt, user.id]
+    [isDataCard, updateCopy, copyText, prompt, user.id],
   );
 
   const handleRemoveFavorite = useCallback(
@@ -78,7 +78,7 @@ const FavoriteCardComponent = ({ data: user, sortableId, isFiltered, onRemoveFav
       e.stopPropagation();
       onRemoveFavorite?.(user.id, !isDataCard);
     },
-    [onRemoveFavorite, user.id, isDataCard]
+    [onRemoveFavorite, user.id, isDataCard],
   );
 
   const handleCardClick = useCallback(() => {
@@ -224,7 +224,7 @@ const FavoriteCardComponent = ({ data: user, sortableId, isFiltered, onRemoveFav
                 {owner}
               </Typography.Text>
             )}
-            <PromptCardTag tags={tags} muted />
+            <PromptCardTag tags={tags} muted clickable={false} />
           </div>
 
           {website && (

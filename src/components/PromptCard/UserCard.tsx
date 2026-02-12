@@ -40,7 +40,7 @@ const UserCardComponent = ({ data: user, sortableId, isFiltered, onEdit, onDelet
       e.stopPropagation();
       copyText(user.description);
     },
-    [copyText, user.description]
+    [copyText, user.description],
   );
 
   const handleEdit = useCallback(
@@ -48,7 +48,7 @@ const UserCardComponent = ({ data: user, sortableId, isFiltered, onEdit, onDelet
       e.stopPropagation();
       onEdit?.(user);
     },
-    [onEdit, user]
+    [onEdit, user],
   );
 
   const handleDelete = useCallback(
@@ -56,7 +56,7 @@ const UserCardComponent = ({ data: user, sortableId, isFiltered, onEdit, onDelet
       e.stopPropagation();
       onDelete?.(user.id);
     },
-    [onDelete, user.id]
+    [onDelete, user.id],
   );
 
   const handleCardClick = useCallback(() => {
@@ -132,7 +132,7 @@ const UserCardComponent = ({ data: user, sortableId, isFiltered, onEdit, onDelet
         </Typography.Paragraph>
         <Flex justify="space-between" align="center">
           <div style={{ flex: 1, overflow: "hidden" }}>
-            <PromptCardTag tags={user.tags} />
+            <PromptCardTag tags={user.tags} clickable={false} />
           </div>
           {user.website && (
             <a href={user.website} target="_blank" rel="noopener noreferrer" style={{ marginLeft: token.marginXS }}>
