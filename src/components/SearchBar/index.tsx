@@ -37,6 +37,13 @@ function readSearchName(search: string) {
   return new URLSearchParams(search).get(SearchNameQueryKey);
 }
 
+/** Check if a prompt matches a search term across text fields */
+const matchesSearch = (prompt: any, searchLower: string): boolean =>
+  prompt.title.toLowerCase().includes(searchLower) ||
+  prompt.description.toLowerCase().includes(searchLower) ||
+  (prompt.remark && prompt.remark.toLowerCase().includes(searchLower)) ||
+  (prompt.notes && prompt.notes.toLowerCase().includes(searchLower));
+
 export function useFilteredPrompts(searchMode: "default" | "myfavor" | "myprompts" = "default") {
   const location = useLocation<UserState>();
   const { i18n } = useDocusaurusContext();
@@ -89,13 +96,7 @@ export function useFilteredPrompts(searchMode: "default" | "myfavor" | "myprompt
             ])
               .then(([userprompts, commus]) => {
                 if (cancelled) return [];
-                return [...userprompts, ...commus].filter(
-                  (prompt) =>
-                    prompt.title.toLowerCase().includes(searchLower) ||
-                    prompt.description.toLowerCase().includes(searchLower) ||
-                    (prompt.remark && prompt.remark.toLowerCase().includes(searchLower)) ||
-                    (prompt.notes && prompt.notes.toLowerCase().includes(searchLower))
-                );
+                return [...userprompts, ...commus].filter((prompt) => matchesSearch(prompt, searchLower));
               })
               .then((filteredCommus) => {
                 if (cancelled) return;
@@ -118,13 +119,7 @@ export function useFilteredPrompts(searchMode: "default" | "myfavor" | "myprompt
               })
               .then(({ commus }) => {
                 if (cancelled) return;
-                const filtered = commus.filter(
-                  (prompt) =>
-                    prompt.title.toLowerCase().includes(searchLower) ||
-                    prompt.description.toLowerCase().includes(searchLower) ||
-                    (prompt.remark && prompt.remark.toLowerCase().includes(searchLower)) ||
-                    (prompt.notes && prompt.notes.toLowerCase().includes(searchLower))
-                );
+                const filtered = commus.filter((prompt) => matchesSearch(prompt, searchLower));
                 startTransition(() => setFilteredCommus(filtered));
               });
           } else {
@@ -144,13 +139,7 @@ export function useFilteredPrompts(searchMode: "default" | "myfavor" | "myprompt
               })
               .then((userprompts) => {
                 if (cancelled) return;
-                const filtered = userprompts.filter(
-                  (prompt) =>
-                    prompt.title.toLowerCase().includes(searchLower) ||
-                    prompt.description.toLowerCase().includes(searchLower) ||
-                    (prompt.remark && prompt.remark.toLowerCase().includes(searchLower)) ||
-                    (prompt.notes && prompt.notes.toLowerCase().includes(searchLower))
-                );
+                const filtered = userprompts.filter((prompt) => matchesSearch(prompt, searchLower));
                 startTransition(() => setFilteredCommus(filtered));
               });
           } else {
