@@ -47,7 +47,7 @@
     "react-markdown": "^10.1.0",
     "react-popper": "^2.3.0",
     "react-share": "^5.3.0",
-    "styled-components": "^6.3.11"
+    "styled-components": "^6"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",
