@@ -41,7 +41,7 @@ const config = {
   // may want to replace "zh-Hans" with "en". "zh-Hant" hidden to avoid build save
   i18n: {
     defaultLocale: "zh-Hans",
-    locales: ["en", "zh-Hans", "ja", "ko", "es", "pt", "fr", "de", "it", "ru", "hi", "ar"],
+    locales: ["en", "zh-Hans", "zh-Hant", "ar", "fr", "ja", "ru"],
     localeConfigs: {
       ar: {
         direction: "rtl",
@@ -58,6 +58,7 @@ const config = {
           path: "docs",
           sidebarPath: "sidebars.js",
         },
+        blog: false,
         theme: {
           customCss: "./src/css/custom.css",
         },
