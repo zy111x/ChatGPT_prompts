@@ -100,33 +100,37 @@ const CommentForm: React.FC<CommentFormProps> = ({ draftKey, requiredMessage, su
   };
 
   return (
-    <Form form={form} onFinish={handleFinish} onValuesChange={handleValuesChange}>
-      <Form.Item
-        name="content"
-        rules={[
-          { required: true, message: requiredMessage },
-          {
-            max: 2000,
-            message: translate({
-              id: "validation.comment.maxLength",
-              message: "评论内容不应超过2000个字符",
-            }),
-          },
-        ]}>
-        <CommentEditor
-          onSubmit={form.submit}
-          submitting={submitting}
-          isLoggedIn={isLoggedIn}
-          onLogin={onLogin}
-          onEmojiToggle={() => onTogglePanel("emoji")}
-          onGifToggle={() => onTogglePanel("gif")}
-          onCancel={handleCancel}
-          placeholder={translate({
-            id: "placeholder.comment",
-            message: "在此输入评论…… 支持使用 Markdown 和 HTML 语法",
-          })}
-        />
-      </Form.Item>
+    <>
+      <Form form={form} onFinish={handleFinish} onValuesChange={handleValuesChange}>
+        <Form.Item
+          name="content"
+          rules={[
+            { required: true, message: requiredMessage },
+            {
+              max: 2000,
+              message: translate({
+                id: "validation.comment.maxLength",
+                message: "评论内容不应超过2000个字符",
+              }),
+            },
+          ]}>
+          <CommentEditor
+            onSubmit={form.submit}
+            submitting={submitting}
+            isLoggedIn={isLoggedIn}
+            onLogin={onLogin}
+            onEmojiToggle={() => onTogglePanel("emoji")}
+            onGifToggle={() => onTogglePanel("gif")}
+            onCancel={handleCancel}
+            placeholder={translate({
+              id: "placeholder.comment",
+              message: "在此输入评论…… 支持使用 Markdown 和 HTML 语法",
+            })}
+          />
+        </Form.Item>
+      </Form>
+      {/* 面板必须在 <Form> 之外：Giphy 搜索框是原生 <input>，放在 form 内按回车会触发
+          隐式提交，弹出「请输入评论内容」这种无关的校验错误。位置不变，仍走 setFieldsValue 回填。 */}
       {activePanel === "emoji" && (
         <Suspense fallback={null}>
           <EmojiPickerLazy isDarkMode={isDarkMode} onEmojiSelect={handleEmojiSelect} />
@@ -137,7 +141,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ draftKey, requiredMessage, su
           <GiphySelector onGifSelect={handleGiphySelect} />
         </Suspense>
       )}
-    </Form>
+    </>
   );
 };
 

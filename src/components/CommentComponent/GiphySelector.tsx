@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid, SearchBar, SearchContext, SearchContextManager } from "@giphy/react-components";
 import { useColorMode } from "@docusaurus/theme-common";
+import { translate } from "@docusaurus/Translate";
 
 const GIPHY_API_KEY = "36zezehgQXZMRV6Mko784D9OEBm0UHiP";
 
@@ -14,12 +15,14 @@ export const GiphySelector = ({ onGifSelect, width = 450, height = 300, columns 
   return (
     <SearchContextManager
       apiKey={GIPHY_API_KEY}
+      // 面板打开先铺热门 GIF：不开的话搜索前是 300px 无说明空白，像加载失败
+      shouldDefaultToTrending
       theme={{
         darkMode: isDarkMode,
         searchbarHeight: 32,
       }}>
       <div className="giphy-selector" style={{ maxWidth: width, marginLeft: "5px" }}>
-        <SearchBar />
+        <SearchBar placeholder={translate({ id: "comments.gif.searchPlaceholder", message: "搜索 GIF" })} />
         <div
           style={{
             height,

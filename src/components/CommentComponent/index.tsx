@@ -30,7 +30,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
             语言中立、18 locale 零 i18n 负担，且不误标人工回复 */}
         {/* 间距用图标 marginLeft 而非 flex gap：Text strong 内部会再包一层 <strong>，
             名字和图标在同一 flex 子项里，外层 gap 不生效 */}
-        <Text strong style={{ fontSize: 14, fontWeight: 500 }}>
+        <Text strong dir="auto" style={{ fontSize: 14, fontWeight: 500 }}>
           {author || (
             <>
               AI Short
@@ -42,8 +42,11 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
           {datetime}
         </Text>
       </div>
+      {/* dir="auto"：评论是任意语言的 UGC，不声明方向时阿语混入网址/英文会让行内顺序错乱 */}
       <div style={{ marginBottom: token.marginXS }}>
-        <Paragraph style={{ margin: 0, wordWrap: "break-word" }}>{content}</Paragraph>
+        <Paragraph dir="auto" style={{ margin: 0, wordWrap: "break-word" }}>
+          {content}
+        </Paragraph>
       </div>
       <div style={{ display: "flex", gap: token.marginSM, alignItems: "center" }}>
         {actions &&
