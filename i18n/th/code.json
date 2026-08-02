@@ -689,6 +689,9 @@
   "share.shareTo": {
     "message": "แชร์ไปที่"
   },
+  "share.shareOn": {
+    "message": "แชร์ไปที่ {channel}"
+  },
   "showcase.header.button": {
     "message": "ดูชุมชน"
   },

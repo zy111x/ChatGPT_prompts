@@ -1,12 +1,12 @@
 import React, { useContext, memo } from "react";
-import classNames from "classnames";
+import clsx from "clsx";
 import { ConfigProvider, theme, Typography } from "antd";
 import { CheckCircleFilled } from "@ant-design/icons";
 import type { ReactNode } from "react";
 
 const { Text, Paragraph } = Typography;
 
-export interface CommentComponentProps {
+interface CommentComponentProps {
   actions?: ReactNode[];
   author?: ReactNode;
   avatar?: ReactNode;
@@ -67,13 +67,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
     </div>
   );
 
-  const cls = classNames(
-    prefixCls,
-    {
-      [`${prefixCls}-rtl`]: direction === "rtl",
-    },
-    className
-  );
+  const cls = clsx(prefixCls, { [`${prefixCls}-rtl`]: direction === "rtl" }, className);
 
   return (
     <div

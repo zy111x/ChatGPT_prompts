@@ -689,6 +689,9 @@
   "share.shareTo": {
     "message": "Şuraya paylaş"
   },
+  "share.shareOn": {
+    "message": "{channel} üzerinden paylaş"
+  },
   "showcase.header.button": {
     "message": "Topluluğu Keşfet"
   },
