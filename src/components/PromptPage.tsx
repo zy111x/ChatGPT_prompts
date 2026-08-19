@@ -13,8 +13,9 @@ import { renderPromptWithPlaceholders, estimateTokens } from "@site/src/utils/pr
 import { toBcp47 } from "@site/src/utils/i18n";
 import { toJsonLd } from "@site/src/utils/jsonLd";
 import Comments from "./Comments";
+import { lazyOptional } from "@site/src/utils/lazyRetry";
 
-const ShareButtons = React.lazy(() => import("./ShareButtons"));
+const ShareButtons = lazyOptional(() => import("./ShareButtons"));
 
 // Composition Sheet 复用样式（与 CommunityPromptPage 保持家族一致）
 const sheetCardStyle: React.CSSProperties = {

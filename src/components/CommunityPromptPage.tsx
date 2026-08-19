@@ -14,8 +14,9 @@ import type { CommunityPrompt } from "@site/src/utils/snapshotPrime";
 import { EmptyState } from "@site/src/components/EmptyState";
 import { toBcp47 } from "@site/src/utils/i18n";
 import Comments from "./Comments";
+import { lazyOptional } from "@site/src/utils/lazyRetry";
 
-const ShareButtons = React.lazy(() => import("./ShareButtons"));
+const ShareButtons = lazyOptional(() => import("./ShareButtons"));
 
 interface CommunityPromptPageProps {
   prompt: CommunityPrompt | null;
