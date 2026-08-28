@@ -1,6 +1,6 @@
 import React, { useContext, memo } from "react";
 import clsx from "clsx";
-import { ConfigProvider, theme, Typography } from "antd";
+import { ConfigProvider, Typography } from "antd";
 import { CheckCircleFilled } from "@ant-design/icons";
 import type { ReactNode } from "react";
 
@@ -19,13 +19,12 @@ interface CommentComponentProps {
 
 const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, avatar, children, className, content, datetime, style }) => {
   const { getPrefixCls, direction } = useContext(ConfigProvider.ConfigContext);
-  const { token } = theme.useToken();
 
   const prefixCls = getPrefixCls("comment");
 
   const contentDom = (
     <div style={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: token.marginXS }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
         {/* author 为空 = 官方账号回复（内容可能是 AI 也可能是站长人工，所以用"认证对勾"而非 AI 字样——
             语言中立、18 locale 零 i18n 负担，且不误标人工回复 */}
         {/* 间距用图标 marginLeft 而非 flex gap：Text strong 内部会再包一层 <strong>，
@@ -34,7 +33,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
           {author || (
             <>
               AI Short
-              <CheckCircleFilled aria-label="official" style={{ fontSize: 13, color: "var(--site-color-tag-selected-text)", marginLeft: 8 }} />
+              <CheckCircleFilled aria-label="official" style={{ fontSize: 13, color: "var(--site-color-tag-selected-text)", marginInlineStart: 8 }} />
             </>
           )}
         </Text>
@@ -43,12 +42,12 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
         </Text>
       </div>
       {/* dir="auto"：评论是任意语言的 UGC，不声明方向时阿语混入网址/英文会让行内顺序错乱 */}
-      <div style={{ marginBottom: token.marginXS }}>
+      <div style={{ marginBottom: 8 }}>
         <Paragraph dir="auto" style={{ margin: 0, wordWrap: "break-word" }}>
           {content}
         </Paragraph>
       </div>
-      <div style={{ display: "flex", gap: token.marginSM, alignItems: "center" }}>
+      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
         {actions &&
           actions.map((action, index) => (
             <span key={index} style={{ display: "inline-flex", alignItems: "center" }}>
@@ -59,10 +58,10 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
       {children && (
         <div
           style={{
-            marginTop: token.marginSM,
-            paddingLeft: token.paddingSM,
-            borderLeft: "2px solid var(--site-color-hairline)",
-            marginLeft: token.marginXS,
+            marginTop: 12,
+            paddingInlineStart: 12,
+            borderInlineStart: "2px solid var(--site-color-hairline)",
+            marginInlineStart: 8,
           }}>
           {children}
         </div>
@@ -77,8 +76,8 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
       className={cls}
       style={{
         ...style,
-        marginBottom: token.margin,
-        padding: token.paddingSM,
+        marginBottom: 16,
+        padding: 12,
         borderRadius: 6,
         transition: "background-color 0.12s var(--site-motion-emphasized)",
       }}
@@ -89,7 +88,7 @@ const CommentComponent: React.FC<CommentComponentProps> = ({ actions, author, av
       onMouseLeave={(e) => {
         e.currentTarget.style.backgroundColor = "transparent";
       }}>
-      <div className={`${prefixCls}-inner`} style={{ display: "flex", gap: token.marginSM }}>
+      <div className={`${prefixCls}-inner`} style={{ display: "flex", gap: 12 }}>
         {avatar && <div className={`${prefixCls}-avatar`}>{avatar}</div>}
         {contentDom}
       </div>

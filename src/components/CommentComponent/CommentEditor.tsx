@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Input, Button, theme } from "antd";
+import { Input, Button } from "antd";
 import { SmileOutlined, GifOutlined, SendOutlined } from "@ant-design/icons";
-import Translate from "@docusaurus/Translate";
+import Translate, { translate } from "@docusaurus/Translate";
+import { IconAction } from "@site/src/components/IconAction";
 
 interface CommentEditorProps {
   value?: string;
@@ -17,7 +18,6 @@ interface CommentEditorProps {
 }
 
 const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit, submitting, placeholder, isLoggedIn, onLogin, onEmojiToggle, onGifToggle, onCancel }) => {
-  const { token } = theme.useToken();
   const [focused, setFocused] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -46,7 +46,7 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
           boxShadow: "none",
           backgroundColor: "transparent",
           resize: "vertical",
-          padding: token.paddingSM,
+          padding: 12,
         }}
       />
       <div
@@ -54,14 +54,14 @@ const CommentEditor: React.FC<CommentEditorProps> = ({ value, onChange, onSubmit
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: `${token.paddingXS}px ${token.paddingSM}px`,
-          borderTop: `1px solid ${token.colorSplit}`,
+          padding: "8px 12px",
+          borderTop: "1px solid var(--site-color-hairline)",
         }}>
-        <div style={{ display: "flex", gap: token.marginXS }}>
-          <Button type="text" size="small" icon={<SmileOutlined />} onClick={onEmojiToggle} />
-          <Button type="text" size="small" icon={<GifOutlined />} onClick={onGifToggle} />
+        <div style={{ display: "flex", gap: 8 }}>
+          <IconAction size="small" label={translate({ id: "comments.emoji.label", message: "插入表情" })} icon={<SmileOutlined />} onClick={onEmojiToggle} />
+          <IconAction size="small" label={translate({ id: "comments.gif.label", message: "插入 GIF" })} icon={<GifOutlined />} onClick={onGifToggle} />
         </div>
-        <div style={{ display: "flex", gap: token.marginXS }}>
+        <div style={{ display: "flex", gap: 8 }}>
           {onCancel && (
             <Button onClick={onCancel} size="small" disabled={submitting}>
               <Translate id="action.cancel">取消</Translate>
