@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Layout from "@theme/Layout";
 import Translate, { translate } from "@docusaurus/Translate";
-import { Button, Tag, Typography, Row, Col, Flex, Space } from "antd";
+import { Button, Tag, Typography, Row, Col, Flex, Space, Skeleton } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
-import Comments from "@site/src/components/Comments";
+import { lazyWithRetry } from "@site/src/utils/lazyRetry";
+
+// 见 PromptPage 同名注释：静态 import 会把 Pagination + Form + react-markdown
+// 全链拖进 eager common chunk。这里评论就是页面主体，多一次请求换所有其他页面不背这份包。
+const Comments = lazyWithRetry(() => import("@site/src/components/Comments"));
 
 const REPO = "rockbenben/ChatGPT-Shortcut";
 const ISSUES_BASE = `https://github.com/${REPO}/issues`;
@@ -27,7 +31,7 @@ const FeedbackPage = () => {
       title={translate({ id: "feedback.title", message: "反馈与建议" })}
       description={translate({
         id: "feedback.description",
-        message: "您的反馈对我们很重要！",
+        message: "你的反馈对我们很重要！",
       })}>
       <main className="margin-vert--md">
         <section className="margin-top--sm margin-bottom--sm">
@@ -84,7 +88,9 @@ const FeedbackPage = () => {
                       </>
                     )}
                   </span>
-                  <Comments pageId={1000} type="page" onCountChange={setCommentCount} />
+                  <Suspense fallback={<Skeleton active paragraph={{ rows: 4 }} />}>
+                    <Comments pageId={1000} type="page" onCountChange={setCommentCount} />
+                  </Suspense>
                 </Flex>
               </Col>
             </Row>

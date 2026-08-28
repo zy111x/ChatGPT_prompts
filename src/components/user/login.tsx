@@ -16,14 +16,14 @@ const rules = {
       required: true,
       message: translate({
         id: "validation.username.required",
-        message: "请输入用户名或注册邮箱！",
+        message: "请输入用户名或注册邮箱",
       }),
     },
   ],
   password: [
     {
       required: true,
-      message: translate({ id: "validation.password.required", message: "请输入密码！" }),
+      message: translate({ id: "validation.password.required", message: "请输入密码" }),
     },
     {
       min: 6,
@@ -38,14 +38,14 @@ const rules = {
       required: true,
       message: translate({
         id: "validation.email.required",
-        message: "请输入您的邮箱！",
+        message: "请输入邮箱",
       }),
     },
     {
       type: "email" as const,
       message: translate({
         id: "validation.email.invalid",
-        message: "请输入有效的邮箱地址！",
+        message: "请输入有效的邮箱地址",
       }),
     },
   ],
@@ -54,7 +54,7 @@ const rules = {
       required: true,
       message: translate({
         id: "validation.confirmPassword.required",
-        message: "请确认新密码！",
+        message: "请确认新密码",
       }),
     },
     ({ getFieldValue }) => ({
@@ -66,7 +66,7 @@ const rules = {
           new Error(
             translate({
               id: "validation.password.match",
-              message: "两次输入的密码不一致！",
+              message: "两次输入的密码不一致",
             })
           )
         );
@@ -212,7 +212,7 @@ const LoginPage = () => {
       spinner.className = "spinner";
 
       const text = doc.createElement("p");
-      text.textContent = translate({ id: "login.google.redirecting", message: "正在跳转到 Google 登录..." });
+      text.textContent = translate({ id: "login.google.redirecting", message: "正在跳转到 Google 登录…" });
 
       wrapper.appendChild(spinner);
       wrapper.appendChild(text);
@@ -274,18 +274,18 @@ const LoginPage = () => {
   );
 
   const onFinishLogin = async (values) => {
-    handleAuth(values, login, <Translate id="message.success.login">登录成功！</Translate>);
+    handleAuth(values, login, <Translate id="message.success.login">已登录</Translate>);
   };
 
   const onFinishRegister = async (values) => {
-    handleAuth(values, register, <Translate id="message.success.register">注册成功！</Translate>);
+    handleAuth(values, register, <Translate id="message.success.register">已注册</Translate>);
   };
 
   const handleForgotPassword = async (values) => {
     setLoading(true);
     try {
       await forgotPassword(values.email);
-      messageApi.success(<Translate id="message.success.forgotPassword">密码重置邮件已发送！</Translate>);
+      messageApi.success(<Translate id="message.success.forgotPassword">密码重置邮件已发送</Translate>);
       form.resetFields();
     } catch (error) {
       console.error(
@@ -327,7 +327,7 @@ const LoginPage = () => {
       // Dynamically determine parameters to pass to backend
       const payload = isValidEmail(target) ? { email: target } : { username: target };
       await sendPasswordlessLink(payload);
-      messageApi.success(<Translate id="message.success.passwordlessLink">免密码登录链接已发送到您的邮箱！</Translate>);
+      messageApi.success(<Translate id="message.success.passwordlessLink">登录链接已发送到你的邮箱</Translate>);
       form.resetFields();
     } catch (error) {
       console.error("Error sending passwordless login link:", error);
@@ -394,7 +394,7 @@ const LoginPage = () => {
             }}>
             <InfoCircleOutlined style={{ color: "var(--site-color-tag-selected-text)", marginTop: 4 }} />
             <Text style={{ fontSize: 13, color: "var(--ifm-color-content-secondary)", lineHeight: 1.55 }}>
-              <Translate id="login.passwordless.info">登录链接将发送至您的邮箱，点击即可登录</Translate>
+              <Translate id="login.passwordless.info">登录链接将发送至你的邮箱，点击即可登录</Translate>
             </Text>
           </div>
           <Form.Item name="email" rules={rules.username} style={{ marginBottom: 24 }}>
@@ -518,7 +518,7 @@ const LoginPage = () => {
             <Text style={{ fontSize: 13, color: "var(--ifm-color-content-secondary)" }}>
               {viewState === "login" && <Translate id="login.subtitle.welcome">登录探索更多优质提示词</Translate>}
               {viewState === "register" && <Translate id="login.subtitle.register">发现、分享和创造精彩提示词</Translate>}
-              {viewState === "forgot-password" && <Translate id="login.subtitle.forgotPassword">重置链接将发送至您的邮箱</Translate>}
+              {viewState === "forgot-password" && <Translate id="login.subtitle.forgotPassword">重置链接将发送至你的邮箱</Translate>}
             </Text>
           </div>
         </>

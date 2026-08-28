@@ -359,7 +359,7 @@ const CommunityPrompts = () => {
             )}
 
             <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
-              <Pagination current={currentPage} pageSize={COMMUNITY_PAGE_SIZE} total={total} showQuickJumper showSizeChanger={false} onChange={onChangePage} />
+              <Pagination current={currentPage} pageSize={COMMUNITY_PAGE_SIZE} total={total} showQuickJumper align="center" showSizeChanger={false} onChange={onChangePage} />
             </div>
 
             {open && (

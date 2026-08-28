@@ -103,7 +103,7 @@ export function useImportExport({ userAuth, getUserAuth, currentLanguage, refres
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      message.success(<Translate id="message.export.success">提示词导出成功！</Translate>);
+      message.success(<Translate id="message.export.success">提示词已导出</Translate>);
     } catch (error) {
       console.error("Export error:", error);
       message.error(<Translate id="message.export.error">导出失败，请稍后重试</Translate>);
@@ -271,10 +271,16 @@ export function useImportExport({ userAuth, getUserAuth, currentLanguage, refres
 
         setImporting(false);
 
-        if (errorCount === 0) {
-          message.success(<Translate id="message.import.success">导入成功！</Translate>);
+        // successCount === 0 && errorCount === 0 是「一条都没导入」——不是失败，而是文件里的东西
+        // 目标账号已经全有了（收藏去重后 cardAdds/commAdds 皆空，patchFavorites 整块被跳过）。
+        // 这一支此前也落进下面的 success，于是导入一份自己刚导出的文件会提示「已导入」，
+        // 而计数一个没变。实测复现过：报成功，实际零变更。成功提示必须对应真的发生过的事。
+        if (errorCount === 0 && successCount === 0) {
+          message.info(<Translate id="message.import.nothing">文件里的内容都已存在，没有需要导入的</Translate>);
+        } else if (errorCount === 0) {
+          message.success(<Translate id="message.import.success">已导入</Translate>);
         } else if (successCount > 0) {
-          message.warning(`${translate({ id: "message.import.partial", message: "部分导入成功" })} (${successCount}/${successCount + errorCount})`);
+          message.warning(`${translate({ id: "message.import.partial", message: "部分提示词已导入" })} (${successCount}/${successCount + errorCount})`);
         } else {
           message.error(<Translate id="message.import.failed">导入失败</Translate>);
         }
