@@ -13,10 +13,12 @@ import { renderPromptWithPlaceholders, estimateTokens } from "@site/src/utils/pr
 import type { CommunityPrompt } from "@site/src/utils/snapshotPrime";
 import { EmptyState } from "@site/src/components/EmptyState";
 import { toBcp47 } from "@site/src/utils/i18n";
-import Comments from "./Comments";
-import { lazyOptional } from "@site/src/utils/lazyRetry";
+import { lazyOptional, lazyWithRetry } from "@site/src/utils/lazyRetry";
 
 const ShareButtons = lazyOptional(() => import("./ShareButtons"));
+// 见 PromptPage 同名注释：静态 import 会把 Pagination + Form + react-markdown
+// 全链拖进 eager common chunk，每个页面都要下载。
+const Comments = lazyWithRetry(() => import("./Comments"));
 
 interface CommunityPromptPageProps {
   prompt: CommunityPrompt | null;
@@ -62,7 +64,7 @@ function CommunityPromptPage({ prompt, loading, error, onVote }: CommunityPrompt
   const [commentCount, setCommentCount] = useState(0);
 
   // 字符/token 统计 + 占位符渲染：放在 early return 之前，避免 loading/error 路径跳过 useMemo 导致 hook 数量变化
-  // renderedPrompt 解析 {{var}} 占位符，prompt 体可能上千字符，每次操作（复制/点赞/收藏）都重渲染会触发 regex 重跑
+  // renderedPrompt 解析 [xxx] 占位符，prompt 体可能上千字符，每次操作（复制/点赞/收藏）都重渲染会触发 regex 重跑
   const charCount = (prompt?.description || "").length;
   const tokenCount = useMemo(() => estimateTokens(prompt?.description || ""), [prompt?.description]);
   const renderedPrompt = useMemo(() => renderPromptWithPlaceholders(prompt?.description || ""), [prompt?.description]);
@@ -94,7 +96,7 @@ function CommunityPromptPage({ prompt, loading, error, onVote }: CommunityPrompt
   // Loading state — 与正常态共用 Card 容器，零跳变
   if (loading) {
     return (
-      <Layout title={translate({ id: "community.loading", message: "加载中..." })}>
+      <Layout title={translate({ id: "community.loading", message: "加载中…" })}>
         <Row justify="center" style={{ marginTop: 16, marginBottom: 24 }}>
           <Col xs={24} sm={22} md={20} lg={18} xl={16} className="full-width-col">
             <div style={{ height: 22, marginBottom: 12 }} aria-hidden="true" />
@@ -191,7 +193,7 @@ function CommunityPromptPage({ prompt, loading, error, onVote }: CommunityPrompt
               {
                 title: (
                   <Link to="/" style={{ color: "var(--site-color-tag-selected-text)" }}>
-                    <HomeOutlined style={{ marginRight: 4 }} />
+                    <HomeOutlined style={{ marginInlineEnd: 4 }} />
                     <Translate id="link.home">首页</Translate>
                   </Link>
                 ),
@@ -218,7 +220,7 @@ function CommunityPromptPage({ prompt, loading, error, onVote }: CommunityPrompt
                 <Space separator={<Dot />} wrap style={{ fontSize: 11.5, color: "var(--site-color-text-tertiary)", fontFamily: "var(--site-font-mono)" }}>
                   {prompt.owner && (
                     <span>
-                      <UserOutlined style={{ marginRight: 4 }} />
+                      <UserOutlined style={{ marginInlineEnd: 4 }} />
                       {prompt.owner}
                     </span>
                   )}
@@ -251,7 +253,7 @@ function CommunityPromptPage({ prompt, loading, error, onVote }: CommunityPrompt
                     padding: "14px 16px",
                     background: "var(--site-color-ghost-border)",
                     borderRadius: 4,
-                    borderLeft: "2px solid var(--site-color-hairline)",
+                    borderInlineStart: "2px solid var(--site-color-hairline)",
                   }}>
                   <Eyebrow>
                     <Translate id="prompt.authorNote">作者备注</Translate>
